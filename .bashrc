@@ -3,10 +3,7 @@
 # for examples
 
 # If not running interactively, don't do anything
-case $- in
-    *i*) ;;
-      *) return;;
-esac
+[ -z "$PS1" ] && return
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -43,7 +40,7 @@ esac
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -57,7 +54,8 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\]\$ "
+    #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -73,6 +71,13 @@ xterm*|rxvt*)
 esac
 
 # enable color support of ls and also add handy aliases
+if [ "$(uname)" == "Darwin" ]; then
+    alias ls='LC_COLLATE=C ls -laGh'
+    alias grep='LC_COLLATE=C grep --color=auto'
+    alias fgrep='LC_COLLATE=C fgrep --color=auto'
+    alias egrep='LC_COLLATE=C egrep --color=auto'
+fi
+
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='LC_COLLATE=C ls -la --color=auto'
@@ -122,7 +127,9 @@ export PATH=$PATH:${SPARK_HOME}/bin
 export PATH=$PATH:/usr/local/hadoop/bin/
 export PATH=$PATH:/home/john/scripts
 
-setterm blength 0
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+  setterm blength 0
+fi
 
 # Make an alias for date that prints 12 hour time
 alias date="date +'%a %b %d %r %Z %Y'"
