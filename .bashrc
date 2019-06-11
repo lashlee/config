@@ -80,7 +80,7 @@ fi
 
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='LC_COLLATE=C ls -la --color=auto'
+    alias ls='LC_COLLATE=C ls -lah --color=auto'
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
 
