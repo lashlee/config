@@ -135,3 +135,10 @@ fi
 alias date="date +'%a %b %d %r %Z %Y'"
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
+### Directory shortcuts
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ......="cd ../../../../.."
+alias back='cd $OLDPWD'
